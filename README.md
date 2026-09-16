@@ -117,6 +117,7 @@ The proxy is multi-provider (routes `gpt-*`, `claude-*`, `gemini-*` by model id)
 ```sh
 npm test        # 18 tests: decision mapping, fail posture, empty chair (argv + worker detection), receipt
 npm run typecheck
+npm run build   # emits dist/ (JS + .d.ts); prepack runs this from clean
 ```
 
 MIT
