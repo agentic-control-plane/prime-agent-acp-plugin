@@ -1,0 +1,23 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # `node --test` type-strips test/*.test.ts natively; that needs
+          # Node >=22.18 (or 24+). No package.json "engines" field is pinned,
+          # so this just satisfies the runtime's own requirement.
+          node-version: "22"
+      - run: npm install
+      - run: npm test
