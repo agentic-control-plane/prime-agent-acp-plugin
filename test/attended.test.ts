@@ -104,13 +104,14 @@ test("claim is not derived from ACP_AGENT_TIER", async () => {
   });
 });
 
-test("PostToolUse carries no attended and no capabilities", async () => {
+test("PostToolUse carries no attended claim and no native_ask (only output_rewrite)", async () => {
   await withEnv(async () => {
     const { handlers, bodies, server } = await setup();
     await handlers.tool_result(RESULT, ctxOf(true));
     assert.equal(bodies[0].hook_event_name, "PostToolUse");
     assert.equal("attended" in bodies[0], false);
-    assert.equal("capabilities" in bodies[0], false);
+    // A text-only, untruncated result declares output_rewrite and nothing else.
+    assert.deepEqual(bodies[0].capabilities, ["output_rewrite"]);
     server.close();
   });
 });
